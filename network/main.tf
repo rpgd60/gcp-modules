@@ -23,7 +23,7 @@ resource "google_compute_firewall" "ssh" {
   }
   direction     = "INGRESS"
   network       = google_compute_network.vpc.id
-  priority      = var.def_fw_rule_priority
+  priority      = "1000"
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["ssh"]
   dynamic  log_config {
@@ -42,7 +42,7 @@ resource "google_compute_firewall" "web" {
   }
   direction     = "INGRESS"
   network       = google_compute_network.vpc.id
-  priority      = var.def_fw_rule_priority
+  priority      = "1000"
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["web"]
 
@@ -61,7 +61,7 @@ resource "google_compute_firewall" "icmp" {
   }
   direction     = "INGRESS"
   network       = google_compute_network.vpc.id
-  priority      = var.def_fw_rule_priority
+  priority      = "1000"
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["icmp"]
 
