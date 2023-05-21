@@ -6,6 +6,6 @@ output "network_name" {
 
 output "subnet_id" {
   description = "subnet ID"
-  value = google_compute_subnetwork.sub1
+  value = google_compute_subnetwork.mi_subnet
 }
 
