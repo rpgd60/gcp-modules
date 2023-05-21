@@ -11,16 +11,4 @@ variable "subnet_cidr" {
   ## Note - no default : this is a required variable
 }
 
-variable "enable_fw_logging" {
-  type = bool
-  description = "Enable firewall rule logging"
-  ## There is default value - variable is optional
-  default = false
-}
 
-variable "iap_range" {
-  description = "Range of IPs used by IAP"
-  type        = string
-  ## There is default value - variable is optional
-  default     = "35.235.240.0/20"
-}

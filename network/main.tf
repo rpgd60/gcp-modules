@@ -7,7 +7,7 @@ resource "google_compute_network" "vpc" {
 
 ## Subnet
 
-resource "google_compute_subnetwork" "mi_subnet" {
+resource "google_compute_subnetwork" "subnet" {
   name          = "${var.network_name}-subnet"
   ip_cidr_range = var.subnet_cidr
   network          = google_compute_network.vpc.id
