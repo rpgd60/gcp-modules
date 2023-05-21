@@ -1,30 +1,29 @@
-resource "google_compute_network" "mi_vpc" {
+# VPC
+resource "google_compute_network" "vpc" {
   name                     = var.network_name
   auto_create_subnetworks  = false
-  enable_ula_internal_ipv6 = true
   mtu                      = 1460
 }
 
-## Subnets
-
+## Subnet
 
 resource "google_compute_subnetwork" "mi_subnet" {
   name          = "${var.network_name}-subnet"
   ip_cidr_range = var.subnet_cidr
   region        = var.region
-  network          = google_compute_network.mi_vpc.id
+  network          = google_compute_network.vpc.id
 }
 
 ## Firewall rules
 
 resource "google_compute_firewall" "ssh" {
-  name  = "${local.name_prefix}-ssh-${count.index}"
+  name  = "m04-ssh"
   allow {
     ports    = ["22"]
     protocol = "tcp"
   }
   direction     = "INGRESS"
-  network       = google_compute_network.vpc[count.index].id
+  network       = google_compute_network.vpc.id
   priority      = var.def_fw_rule_priority
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["ssh"]
@@ -37,14 +36,13 @@ resource "google_compute_firewall" "ssh" {
 }
 
 resource "google_compute_firewall" "web" {
-  count = var.num_vpcs
-  name  = "${local.name_prefix}-web-${count.index}"
+  name  = "m04-web"
   allow {
     ports    = ["80", "443"]
     protocol = "tcp"
   }
   direction     = "INGRESS"
-  network       = google_compute_network.vpc[count.index].id
+  network       = google_compute_network.vpc.id
   priority      = var.def_fw_rule_priority
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["web"]
@@ -58,13 +56,12 @@ resource "google_compute_firewall" "web" {
 }
 
 resource "google_compute_firewall" "icmp" {
-  count = var.num_vpcs
-  name  = "${local.name_prefix}-icmp-${count.index}"
+  name  = "m04-icmp"
   allow {
     protocol = "icmp"
   }
   direction     = "INGRESS"
-  network       = google_compute_network.vpc[count.index].id
+  network       = google_compute_network.vpc.id
   priority      = var.def_fw_rule_priority
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["icmp"]
