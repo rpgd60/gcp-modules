@@ -9,20 +9,20 @@ resource "google_compute_instance" "vm" {
     }
   }
   network_interface {
-    subnetwork = var.subnet_name
-    stack_type = "IPV4_IPV6"
-
+    # subnetwork = var.subnet_name
+    network = var.network_name
+    subnetwork = var.subnet_id
     access_config {
       # Include this section to give the VM an external IP address
     }
   }
 
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    # email  = google_service_account.default.email
-    email=var.service_account_email
-    scopes = ["cloud-platform"]
-  }
+  # service_account {
+  #   # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+  #   # email  = google_service_account.default.email
+  #   email=var.service_account_email
+  #   scopes = ["cloud-platform"]
+  # }
   allow_stopping_for_update = true
 }
 

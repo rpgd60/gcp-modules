@@ -11,4 +11,10 @@ variable "subnet_cidr" {
   ## Note - no default : this is a required variable
 }
 
+variable "enable_fw_logging" {
+  description = "If true, will enable logging for firewall rules"
+  type = bool
+  default = false  ## Default value - variable is optional
+}
+
 

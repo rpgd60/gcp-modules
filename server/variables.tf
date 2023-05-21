@@ -27,4 +27,9 @@ variable "subnet_id" {
   type = string
 }
 
+variable "network_tags" {
+  description = "Tags to drive application of firewall rules"
+  type = list(string)
+  default = ["web", "icmp", "ssh"]
+}
 
