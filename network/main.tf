@@ -16,7 +16,7 @@ resource "google_compute_subnetwork" "subnet" {
 ## Firewall rules
 
 resource "google_compute_firewall" "ssh" {
-  name  = "m04-ssh"
+  name  = "${google_compute_network.vpc.name}-m04-ssh"
   allow {
     ports    = ["22"]
     protocol = "tcp"
@@ -35,7 +35,8 @@ resource "google_compute_firewall" "ssh" {
 }
 
 resource "google_compute_firewall" "web" {
-  name  = "m04-web"
+  name  = "${google_compute_network.vpc.name}-m04-web"
+  # name  = "m04-web"
   allow {
     ports    = ["80", "443"]
     protocol = "tcp"
@@ -55,7 +56,7 @@ resource "google_compute_firewall" "web" {
 }
 
 resource "google_compute_firewall" "icmp" {
-  name  = "m04-icmp"
+  name  = "${google_compute_network.vpc.name}-m04-icmp"
   allow {
     protocol = "icmp"
   }
